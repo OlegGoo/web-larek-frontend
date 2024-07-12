@@ -75,14 +75,14 @@ export class Card extends Component<IProduct> {
 		this.setText(this._price, value ? `${value}` + ' синапсов' : 'Бесценно');
 
 		if (this._button && value === null) {
-			this._button.disabled = true;
+			this.setDisabled(this._button, true);  
 		}
 	}
 
 	set category(value: CategoryProduct) {
 		if (this._category) {
 			this.setText(this._category, value);
-			this._category.classList.add(categorySelectors[value]);
+			this.toggleClass(this._category, categorySelectors[value], true);
 		}
 	}
 
@@ -94,7 +94,7 @@ export class Card extends Component<IProduct> {
 
 	set basketIndex(value: number) {
 		if (this._basketIndex) {
-			this._basketIndex.textContent = value.toString();
+			this.setText(this._basketIndex, value.toString());
 		}
 	}
 }

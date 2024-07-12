@@ -16,23 +16,33 @@ export class Basket extends Component<IBasket> {
 
 		if (this._button) {
 			this._button.addEventListener('click', () => events.emit('basket:order'));
+			this.toggleButton(true); 
+			this.emptyBasket();
 		}
 	}
-  set total(price: number) {
+	
+	set total(price: number) {
 		this.setText(this._total, `${price} синапсов`);
 	}
-  
+	
+	toggleButton(state: boolean) {
+		this.setDisabled(this._button, state);    
+	} 
+	
 	set items(items: HTMLElement[]) {
 		if (items.length) {
 			this._list.replaceChildren(...items);
-			this._button.disabled = false;
+			this.toggleButton(false);
 		} else {
-			this._list.replaceChildren(
-				createElement<HTMLParagraphElement>('p', {
-					textContent: 'Корзина пуста',
-				})
-			);
-			this._button.disabled = true;
-		}
+			this.toggleButton(true); 
+			this.emptyBasket();
+		} 
 	}
-}
+
+	emptyBasket() {
+		this._list.replaceChildren(
+			createElement<HTMLParagraphElement>('p', {
+				textContent: 'Корзина пуста'})
+		);
+	}
+} 
